@@ -18,9 +18,14 @@ exports.functionsAnswers = {
 
   makeClosures : function(arr, fn) {
     var temp = [];
+    var tempFunc = function(item){ 
+      return function(){
+        return fn(item);
+      };
+    };
     for(var i=0; i < arr.length; i++){
       var item = arr[i];
-      temp.push(function(){ return fn(item);});
+      temp.push(tempFunc(item));
     }
     
     return temp;

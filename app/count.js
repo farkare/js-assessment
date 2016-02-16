@@ -2,12 +2,21 @@ exports = (typeof window === 'undefined') ? global : window;
 
 exports.countAnswers =  {
   count : function (start, end) {
-      var counter = start;
-      var interval = setInterval(function(){ if(counter == end){  clearInterval(interval); }else{ counter++;} }, 100); 
+    var interval;
+    var counter = function  () {
+      console.log(start++);
 
-      this.cancel =  function(){
-      	clearInterval(interval);
-      } 
-      return this;  
+      if (start <= end) {
+        interval = setTimeout(counter, 100);
+      }
+    }
+
+    counter();
+
+    return {
+      cancel : function () {
+        interval && clearTimeout(interval);
+      }
+    };
   }
 };
